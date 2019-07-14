@@ -1,0 +1,18 @@
+diff --git a/node_modules/react-native/React/CxxBridge/RCTCxxBridge.mm b/node_modules/react-native/React/CxxBridge/RCTCxxBridge.mm
+index 5a7188b..9b796a0 100644
+--- a/node_modules/react-native/React/CxxBridge/RCTCxxBridge.mm
++++ b/node_modules/react-native/React/CxxBridge/RCTCxxBridge.mm
+@@ -499,7 +499,12 @@ - (id)moduleForName:(NSString *)moduleName lazilyLoadIfNecessary:(BOOL)lazilyLoa
+     // Try again.
+     moduleData = _moduleDataByName[moduleName];
+   } else {
+-    RCTLogError(@"Unable to find module for %@", moduleName);
++    // When ScrollView deallocs (refreshing JS) we get this error
++    // It seems a bug with React Native 0.60.x (patching for now)
++    if (![moduleName isEqual:@"UIManager"]) {
++      RCTLogError(@"Unable to find module for %@", moduleName);
++    }
++
+   }
+ 
+   return moduleData.instance;
