@@ -10,7 +10,8 @@
     "flow": "flow --include-warnings",
     "lint": "eslint .",
     "ci": "npm test && npm run lint && npm run flow",
-    "prepare": "patch-package"
+    "prepare": "patch-package",
+    "postinstall": "cd ios && pod install"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.2.1",
