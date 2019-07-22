@@ -2,13 +2,14 @@
 
 import React, { Component } from 'react';
 import {
+  Animated,
   InteractionManager,
   Platform,
   StatusBar,
   StyleSheet,
   View,
 } from 'react-native';
-import { FAB } from 'react-native-paper';
+import { FAB, Snackbar } from 'react-native-paper';
 import { connect } from 'react-redux';
 
 import Screen from '../../components/Screen';
@@ -58,6 +59,8 @@ type Props = NavigationObjectType & {
 
 type State = {
   selectedDay: string,
+  snackbarVisible: boolean,
+  fabAnimatedValue: Animated.Value,
 };
 
 class HomeScreen extends Component<Props, State> {
@@ -90,6 +93,8 @@ class HomeScreen extends Component<Props, State> {
     super(props);
     this.state = {
       selectedDay: dateToWorkoutId(getToday()),
+      snackbarVisible: false,
+      fabAnimatedValue: new Animated.Value(0),
     };
   }
 
@@ -127,7 +132,16 @@ class HomeScreen extends Component<Props, State> {
   _shareWorkout = async () => {
     const workouts = getWorkoutById(this.state.selectedDay);
     const workout = workouts.length > 0 ? workouts[0] : null;
-    await shareWorkout(workout);
+    if (workout) {
+      await shareWorkout(workout);
+    } else {
+      Animated.timing(this.state.fabAnimatedValue, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+      this.setState({ snackbarVisible: true });
+    }
   };
 
   _onAddExercises = () => {
@@ -172,6 +186,15 @@ class HomeScreen extends Component<Props, State> {
     );
   };
 
+  _onDismissSnackbar = () => {
+    Animated.timing(this.state.fabAnimatedValue, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+    this.setState({ snackbarVisible: false });
+  };
+
   render() {
     const { selectedDay } = this.state;
     const today = getToday();
@@ -205,7 +228,26 @@ class HomeScreen extends Component<Props, State> {
             />
           )}
         />
-        <FAB icon="add" onPress={this._onAddExercises} style={styles.fab} />
+        <FAB
+          icon="add"
+          onPress={this._onAddExercises}
+          style={[
+            styles.fab,
+            {
+              translateY: this.state.fabAnimatedValue.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, -48],
+              }),
+            },
+          ]}
+        />
+        <Snackbar
+          visible={this.state.snackbarVisible}
+          onDismiss={this._onDismissSnackbar}
+          duration={Snackbar.DURATION_SHORT}
+        >
+          {i18n.t('share_workout__empty')}
+        </Snackbar>
       </Screen>
     );
   }
