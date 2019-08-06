@@ -9,7 +9,6 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { FAB, Snackbar } from 'react-native-paper';
 import { connect } from 'react-redux';
 
 import Screen from '../../components/Screen';
@@ -39,6 +38,7 @@ import WorkoutComments from '../../components/WorkoutComments';
 import { hideSplashScreen } from '../../native/RNSplashScreen';
 import { getDefaultNavigationOptions } from '../../utils/navigation';
 import { shareWorkout } from '../../utils/share';
+import FABSnackbar from '../../components/FABSnackbar';
 
 type NavigationObjectType = {
   navigation: NavigationType<{
@@ -135,11 +135,6 @@ class HomeScreen extends Component<Props, State> {
     if (workout) {
       await shareWorkout(workout);
     } else {
-      Animated.timing(this.state.fabAnimatedValue, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
       this.setState({ snackbarVisible: true });
     }
   };
@@ -187,11 +182,6 @@ class HomeScreen extends Component<Props, State> {
   };
 
   _onDismissSnackbar = () => {
-    Animated.timing(this.state.fabAnimatedValue, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
     this.setState({ snackbarVisible: false });
   };
 
@@ -228,26 +218,13 @@ class HomeScreen extends Component<Props, State> {
             />
           )}
         />
-        <FAB
-          icon="add"
-          onPress={this._onAddExercises}
-          style={[
-            styles.fab,
-            {
-              translateY: this.state.fabAnimatedValue.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, -48],
-              }),
-            },
-          ]}
-        />
-        <Snackbar
-          visible={this.state.snackbarVisible}
+        <FABSnackbar
+          fabIcon="add"
           onDismiss={this._onDismissSnackbar}
-          duration={Snackbar.DURATION_SHORT}
-        >
-          {i18n.t('share_workout__empty')}
-        </Snackbar>
+          show={this.state.snackbarVisible}
+          snackbarText={i18n.t('share_workout__empty')}
+          onFabPress={this._onAddExercises}
+        />
       </Screen>
     );
   }
@@ -257,11 +234,6 @@ const styles = StyleSheet.create({
   list: {
     flexGrow: 1,
     paddingBottom: 56 + 32, // Taking FAB into account
-  },
-  fab: {
-    position: 'absolute',
-    bottom: 16,
-    right: 16,
   },
   headerButtons: {
     flexDirection: 'row',
