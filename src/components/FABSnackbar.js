@@ -3,6 +3,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Animated, StyleSheet } from 'react-native';
 import { FAB, Snackbar } from 'react-native-paper';
+import { NavigationEvents } from 'react-navigation';
 
 type Props = {
   show: boolean,
@@ -42,6 +43,13 @@ const FABSnackbar = ({
 
   return (
     <Fragment>
+      <NavigationEvents
+        onWillBlur={() => {
+          if (snackbarVisible) {
+            onDismiss();
+          }
+        }}
+      />
       <FAB
         icon={fabIcon}
         onPress={onFabPress}
