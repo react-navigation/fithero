@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { FlatList, Keyboard, StyleSheet, View } from 'react-native';
 import { Card, Divider } from 'react-native-paper';
-import { AndroidBackHandler } from 'react-navigation-backhandler';
+import AndroidBackHandler from './AndroidBackHandler';
 
 import type {
   WorkoutExerciseSchemaType,

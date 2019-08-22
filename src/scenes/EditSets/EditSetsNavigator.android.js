@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import TabbedViewPager from 'react-native-tabbed-view-pager-android';
-import { AndroidBackHandler } from 'react-navigation-backhandler';
 
 import withTheme from '../../utils/theme/withTheme';
 import i18n from '../../utils/i18n';
@@ -11,6 +10,7 @@ import { dateToString, getDatePrettyFormat, getToday } from '../../utils/date';
 import { getExerciseName } from '../../utils/exercises';
 import ExerciseHistory from './ExerciseHistory';
 import EditSetsScreen from './EditSetsScreen';
+import AndroidBackHandler from './AndroidBackHandler';
 import Screen from '../../components/Screen';
 import { getDefaultNavigationOptions } from '../../utils/navigation';
 import type { NavigationType } from '../../types';

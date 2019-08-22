@@ -1,15 +1,21 @@
 /* @flow */
 
-import { createStackNavigator } from 'react-navigation';
+import * as React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import i18n from '../utils/i18n';
 import SettingsScreen from './Settings';
 
-export default createStackNavigator({
-  Settings: {
-    screen: SettingsScreen,
-    navigationOptions: {
-      title: i18n.t('menu__settings'),
-    },
-  },
-});
+const Stack = createStackNavigator();
+
+export default function StackScreen() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Settings"
+        options={{ title: i18n.t('menu__settings') }}
+        component={SettingsScreen}
+      />
+    </Stack.Navigator>
+  );
+}
