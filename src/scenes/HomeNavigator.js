@@ -19,10 +19,11 @@ import HeaderOverflowButton from '../components/HeaderOverflowButton';
 import { isCustomExercise } from '../database/services/ExerciseService';
 import HeaderButton from '../components/HeaderButton';
 import { getExerciseName } from '../utils/exercises';
+import withTheme from '../utils/theme/withTheme';
 
 const Stack = createStackNavigator();
 
-export default function StackScreen({ theme }) {
+export default withTheme(function StackScreen({ theme }) {
   return (
     <Stack.Navigator screenOptions={getDefaultNavigationOptions(theme)}>
       <Stack.Screen
@@ -170,7 +171,7 @@ export default function StackScreen({ theme }) {
       />
     </Stack.Navigator>
   );
-}
+});
 
 const styles = StyleSheet.create({
   header: {

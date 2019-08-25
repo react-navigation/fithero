@@ -12,14 +12,13 @@ import HomeNavigator from './scenes/HomeNavigator';
 import SettingsNavigator from './scenes/SettingsNavigator';
 import StatisticsNavigator from './scenes/StatisticsNavigator';
 import EditExerciseScreen from './scenes/EditExercise/EditExerciseScreen';
-import withTheme from './utils/theme/withTheme';
 import HeaderButton from './components/HeaderButton';
 import HeaderIconButton from './components/HeaderIconButton';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
-export default withTheme(function App({ theme }) {
+export default function App() {
   const ref = React.useRef();
 
   useBackButton(ref);
@@ -33,7 +32,6 @@ export default withTheme(function App({ theme }) {
               initialRouteName="Home"
               shifting={false}
               keyboardHidesNavigationBar={false}
-              screenOptions={{ theme: theme }}
             >
               <Tab.Screen
                 name="Home"
@@ -41,27 +39,24 @@ export default withTheme(function App({ theme }) {
                   tabBarIcon: tabBarIcon('home'),
                   title: i18n.t('menu__home'),
                 }}
-              >
-                {() => <HomeNavigator theme={theme} />}
-              </Tab.Screen>
+                component={HomeNavigator}
+              />
               <Tab.Screen
                 name="Statistics"
                 options={{
                   tabBarIcon: tabBarIcon('show-chart'),
                   title: i18n.t('menu__statistics'),
                 }}
-              >
-                {() => <StatisticsNavigator theme={theme} />}
-              </Tab.Screen>
+                component={StatisticsNavigator}
+              />
               <Tab.Screen
                 name="Settings"
                 options={{
                   tabBarIcon: tabBarIcon('settings'),
                   title: i18n.t('menu__settings'),
                 }}
-              >
-                {() => <SettingsNavigator theme={theme} />}
-              </Tab.Screen>
+                component={SettingsNavigator}
+              />
             </Tab.Navigator>
           )}
         </Stack.Screen>
@@ -91,4 +86,4 @@ export default withTheme(function App({ theme }) {
       </Stack.Navigator>
     </NavigationContainer>
   );
-});
+}
