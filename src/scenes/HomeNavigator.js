@@ -128,10 +128,7 @@ export default withTheme(function StackScreen({ theme }) {
           return {
             title: i18n.t('sets'),
             headerTitle: Platform.select({
-              android: getExerciseName(
-                params.params.exerciseKey,
-                params.params.exerciseName
-              ),
+              android: getExerciseName(params.exerciseKey, params.exerciseName),
               ios: '',
             }),
           };
