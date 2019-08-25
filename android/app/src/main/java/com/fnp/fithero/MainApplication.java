@@ -54,7 +54,7 @@ public class MainApplication extends Application implements ReactApplication, Sh
     protected List<ReactPackage> getPackages() {
       return Arrays.asList(
           new MainReactPackage(),
-            new ReanimatedPackage(),
+          new ReanimatedPackage(),
           new MPAndroidChartPackage(),
           new TabbedViewPagerAndroidPackage(),
           new AsyncStoragePackage(),
