@@ -13,20 +13,11 @@ import {
   editExercise,
   getExerciseById,
 } from '../../database/services/ExerciseService';
-import HeaderButton from '../../components/HeaderButton';
-import HeaderIconButton from '../../components/HeaderIconButton';
 import type { NavigationType } from '../../types';
 import Screen from '../../components/Screen';
-import { getDefaultNavigationOptions } from '../../utils/navigation';
 
 type NavigationObjectType = {
   navigation: NavigationType<{ id?: string, onSave: () => void }>,
-};
-
-type NavigationOptions = NavigationObjectType & {
-  screenProps: {
-    theme: ThemeType,
-  },
 };
 
 type Props = NavigationObjectType & {
@@ -41,23 +32,6 @@ type State = {
 };
 
 export class EditExerciseScreen extends React.Component<Props, State> {
-  static navigationOptions = ({
-    navigation,
-    screenProps,
-  }: NavigationOptions) => {
-    const { params = {} } = navigation.state;
-    return {
-      ...getDefaultNavigationOptions(screenProps.theme),
-      title: params.id ? i18n.t('edit_exercise') : i18n.t('new_exercise'),
-      headerLeft: (
-        <HeaderIconButton icon="close" onPress={() => navigation.goBack()} />
-      ),
-      headerRight: (
-        <HeaderButton onPress={params.onSave}>{i18n.t('save')}</HeaderButton>
-      ),
-    };
-  };
-
   constructor(props: Props) {
     super(props);
     const { params = {} } = props.navigation.state;

@@ -17,23 +17,15 @@ import {
   getWorkoutComments,
   setWorkoutComments,
 } from '../../database/services/WorkoutService';
-import HeaderButton from '../../components/HeaderButton';
 import type { NavigationType } from '../../types';
 import type { ThemeType } from '../../utils/theme/withTheme';
 import Screen from '../../components/Screen';
-import { getDefaultNavigationOptions } from '../../utils/navigation';
 
 type NavigationObjectType = {
   navigation: NavigationType<{
     day: string,
     saveComments: () => void,
   }>,
-};
-
-type NavigationOptions = NavigationObjectType & {
-  screenProps: {
-    theme: ThemeType,
-  },
 };
 
 type Props = NavigationObjectType & {
@@ -45,26 +37,11 @@ type State = {
 };
 
 class CommentsScreen extends React.Component<Props, State> {
-  static navigationOptions = ({
-    navigation,
-    screenProps,
-  }: NavigationOptions) => {
-    const { params = {} } = navigation.state;
-    return {
-      ...getDefaultNavigationOptions(screenProps.theme),
-      headerRight: (
-        <HeaderButton onPress={params.saveComments}>
-          {i18n.t('save')}
-        </HeaderButton>
-      ),
-    };
-  };
-
   constructor(props: Props) {
     super(props);
     this.state = {
       comments: getWorkoutComments(
-        dateToWorkoutId(this.props.navigation.state.params.day)
+        dateToWorkoutId(this.props.route.params.day)
       ),
     };
   }
@@ -81,7 +58,7 @@ class CommentsScreen extends React.Component<Props, State> {
 
   _saveComments = () => {
     const { comments } = this.state;
-    const workoutId = dateToWorkoutId(this.props.navigation.state.params.day);
+    const workoutId = dateToWorkoutId(this.props.route.params.day);
 
     if (comments) {
       setWorkoutComments(workoutId, comments);
@@ -96,7 +73,7 @@ class CommentsScreen extends React.Component<Props, State> {
     const { comments } = this.state;
     const { colors } = this.props.theme;
     const dayString = getDatePrettyFormat(
-      this.props.navigation.state.params.day,
+      this.props.route.params.day,
       dateToString(getToday())
     );
 

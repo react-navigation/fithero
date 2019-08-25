@@ -23,28 +23,18 @@ import {
 import { getWorkoutsByRange } from '../../database/services/WorkoutService';
 import WorkoutList from '../../components/WorkoutList';
 import type { WorkoutSchemaType } from '../../database/types';
-import HeaderIconButton from '../../components/HeaderIconButton';
 import DataProvider from '../../components/DataProvider';
 import type {
   AppThemeType,
   FirstDayOfTheWeekType,
 } from '../../redux/modules/settings';
-import HeaderOverflowButton from '../../components/HeaderOverflowButton';
-import i18n from '../../utils/i18n';
 import WorkoutComments from '../../components/WorkoutComments';
 import { hideSplashScreen } from '../../native/RNSplashScreen';
-import { getDefaultNavigationOptions } from '../../utils/navigation';
 
 type NavigationObjectType = {
   navigation: NavigationType<{
     addWorkoutComment: () => void,
   }>,
-};
-
-type NavigationOptions = NavigationObjectType & {
-  screenProps: {
-    theme: AppThemeType,
-  },
 };
 
 type Props = NavigationObjectType & {
@@ -57,31 +47,6 @@ type State = {
 };
 
 class HomeScreen extends Component<Props, State> {
-  static navigationOptions = ({
-    navigation,
-    screenProps,
-  }: NavigationOptions) => {
-    const navigateToCalendar = () => {
-      navigation.navigate('Calendar', {
-        today: getToday().format('YYYY-MM-DD'),
-      });
-    };
-    const { params = {} } = navigation.state;
-    return {
-      ...getDefaultNavigationOptions(screenProps.theme),
-      headerRight: (
-        <View style={styles.headerButtons}>
-          <HeaderIconButton icon="date-range" onPress={navigateToCalendar} />
-          <HeaderOverflowButton
-            actions={[i18n.t('comment_workout')]}
-            onPress={params.addWorkoutComment}
-            last
-          />
-        </View>
-      ),
-    };
-  };
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -197,9 +162,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 16,
     right: 16,
-  },
-  headerButtons: {
-    flexDirection: 'row',
   },
 });
 

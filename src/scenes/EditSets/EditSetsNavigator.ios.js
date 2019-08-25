@@ -14,7 +14,6 @@ import withTheme from '../../utils/theme/withTheme';
 import type { NavigationType } from '../../types';
 import type { ThemeType } from '../../utils/theme/withTheme';
 import Screen from '../../components/Screen';
-import { getDefaultNavigationOptions } from '../../utils/navigation';
 
 type NavigationObjectType = {
   navigation: NavigationType<{
@@ -22,12 +21,6 @@ type NavigationObjectType = {
     exerciseKey: string,
     exerciseName?: string,
   }>,
-};
-
-type NavigationOptions = NavigationObjectType & {
-  screenProps: {
-    theme: ThemeType,
-  },
 };
 
 type Props = NavigationObjectType & {
@@ -39,17 +32,12 @@ type State = {
 };
 
 class EditSetsNavigator extends React.Component<Props, State> {
-  static navigationOptions = ({ screenProps }: NavigationOptions) => ({
-    ...getDefaultNavigationOptions(screenProps.theme),
-    headerTitle: '',
-  });
-
   state = {
     selectedIndex: 0,
   };
 
   render() {
-    const { navigation, theme } = this.props;
+    const { navigation, theme, route } = this.props;
     const { selectedIndex } = this.state;
 
     const ContentComponent =
@@ -58,17 +46,11 @@ class EditSetsNavigator extends React.Component<Props, State> {
     return (
       <Screen>
         <Text style={styles.title}>
-          {getExerciseName(
-            navigation.state.params.exerciseKey,
-            navigation.state.params.exerciseName
-          )}
+          {getExerciseName(route.params.exerciseKey, route.params.exerciseName)}
         </Text>
         <SegmentedControlIOS
           values={[
-            getDatePrettyFormat(
-              navigation.state.params.day,
-              dateToString(getToday())
-            ),
+            getDatePrettyFormat(route.params.day, dateToString(getToday())),
             i18n.t('history'),
           ]}
           selectedIndex={this.state.selectedIndex}
@@ -80,7 +62,7 @@ class EditSetsNavigator extends React.Component<Props, State> {
           tintColor={theme.colors.text}
           style={styles.tabs}
         />
-        <ContentComponent navigation={navigation} />
+        <ContentComponent navigation={navigation} route={route} />
       </Screen>
     );
   }

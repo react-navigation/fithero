@@ -7,25 +7,17 @@ import { connect } from 'react-redux';
 
 import Screen from '../../components/Screen';
 import type { NavigationType, RealmResults } from '../../types';
-import HeaderIconButton from '../../components/HeaderIconButton';
 import { firstDayOfTheWeekToNumber, formatDate } from '../../utils/date';
 import { getAllWorkouts } from '../../database/services/WorkoutService';
 import type { WorkoutSchemaType } from '../../database/types';
 import withTheme from '../../utils/theme/withTheme';
 import type { ThemeType } from '../../utils/theme/withTheme';
-import { getDefaultNavigationOptions } from '../../utils/navigation';
 
 type NavigationObjectType = {
   navigation: NavigationType<{
     today: string,
     scrollToToday?: () => void,
   }>,
-};
-
-type NavigationOptions = NavigationObjectType & {
-  screenProps: {
-    theme: ThemeType,
-  },
 };
 
 type Props = NavigationObjectType & {
@@ -49,27 +41,6 @@ export class CalendarScreen extends React.Component<Props, State> {
   } | null;
 
   workoutsListener: RealmResults<WorkoutSchemaType>;
-
-  static navigationOptions = ({
-    navigation,
-    screenProps,
-  }: NavigationOptions) => {
-    const { params = {} } = navigation.state;
-    return {
-      ...getDefaultNavigationOptions(screenProps.theme),
-      headerRight: (
-        <HeaderIconButton
-          onPress={() => {
-            if (params.scrollToToday) {
-              params.scrollToToday();
-            }
-          }}
-          icon="today"
-          last
-        />
-      ),
-    };
-  };
 
   componentDidMount() {
     global.requestAnimationFrame(() => {
@@ -100,7 +71,7 @@ export class CalendarScreen extends React.Component<Props, State> {
   }
 
   scrollToToday = () => {
-    const { today } = this.props.navigation.state.params;
+    const { today } = this.props.route.params;
     if (this.calendarList) {
       this.calendarList.scrollToDay(today, 0, true);
     }
@@ -116,7 +87,7 @@ export class CalendarScreen extends React.Component<Props, State> {
       firstDay,
       theme: { colors },
     } = this.props;
-    const { today } = this.props.navigation.state.params;
+    const { today } = this.props.route.params;
 
     return (
       <Screen>

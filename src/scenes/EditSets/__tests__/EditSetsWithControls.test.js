@@ -26,6 +26,12 @@ jest.mock('../../../database/services/WorkoutSetService', () => ({
   getMaxSetByType: jest.fn(),
 }));
 
+jest.mock('@react-navigation/core', () => {
+  return {
+    useFocusEffect: jest.fn(),
+  };
+});
+
 jest.mock('../../../database/services/WorkoutExerciseService');
 
 const date = toDate('2018-05-01T00:00:00.000Z');

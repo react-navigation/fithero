@@ -27,7 +27,7 @@ type Props = {
 };
 
 const ExerciseHistory = (props: Props) => {
-  const type = props.navigation.state.params.exerciseKey;
+  const type = props.route.params.exerciseKey;
 
   const { data, timestamp } = useRealmResultsHook<WorkoutExerciseSchemaType>(
     useCallback(() => getExercisesByType(type), [type])

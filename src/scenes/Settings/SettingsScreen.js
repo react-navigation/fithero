@@ -25,17 +25,10 @@ import {
   restoreDatabase,
 } from '../../database/services/BackupService';
 import Screen from '../../components/Screen';
-import { getDefaultNavigationOptions } from '../../utils/navigation';
 
 const DEFAULT_UNIT_SYSTEM = 'default_unit_system';
 const FIRST_DAY_OF_THE_WEEK = 'first_day_of_the_week';
 const APP_THEME = 'app_theme';
-
-type NavigationOptions = {
-  screenProps: {
-    theme: AppThemeType,
-  },
-};
 
 type Props = {
   appTheme: AppThemeType,
@@ -52,12 +45,6 @@ type State = {
 };
 
 class SettingsScreen extends React.Component<Props, State> {
-  static navigationOptions = ({ screenProps }: NavigationOptions) => {
-    return {
-      ...getDefaultNavigationOptions(screenProps.theme),
-    };
-  };
-
   state = {
     showDialog: '',
   };

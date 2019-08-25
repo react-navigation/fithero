@@ -15,13 +15,9 @@ import {
 import type { ExerciseSchemaType } from '../../database/types';
 import { getExerciseMuscleName, getExerciseName } from '../../utils/exercises';
 import i18n from '../../utils/i18n';
-import HeaderIconButton from '../../components/HeaderIconButton';
-import HeaderOverflowButton from '../../components/HeaderOverflowButton';
 import type { NavigationType } from '../../types';
 import DeleteWarningDialog from '../../components/DeleteWarningDialog';
 import Screen from '../../components/Screen';
-import type { AppThemeType } from '../../redux/modules/settings';
-import { getDefaultNavigationOptions } from '../../utils/navigation';
 
 const getExercise = memoize(id => exercises.find(e => e.id === id));
 
@@ -33,12 +29,6 @@ type NavigationObjectType = {
   }>,
 };
 
-type NavigationOptions = NavigationObjectType & {
-  screenProps: {
-    theme: AppThemeType,
-  },
-};
-
 type Props = NavigationObjectType & {};
 
 type State = {
@@ -47,30 +37,6 @@ type State = {
 };
 
 class ExerciseDetailsScreen extends React.Component<Props, State> {
-  static navigationOptions = ({
-    navigation,
-    screenProps,
-  }: NavigationOptions) => {
-    const { params = {} } = navigation.state;
-
-    return {
-      ...getDefaultNavigationOptions(screenProps.theme),
-      headerRight: isCustomExercise(params.id) ? (
-        <View style={styles.toolbarActions}>
-          <HeaderIconButton onPress={() => params.editAction()} icon="edit" />
-          <HeaderOverflowButton
-            onPress={i => params.deleteAction(i)}
-            actions={[i18n.t('delete')]}
-            destructiveButtonIndex={1}
-            last
-          />
-        </View>
-      ) : (
-        undefined
-      ),
-    };
-  };
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -84,7 +50,7 @@ class ExerciseDetailsScreen extends React.Component<Props, State> {
 
   _editExercise = () => {
     this.props.navigation.navigate('EditExercise', {
-      id: this.props.navigation.state.params.id,
+      id: this.props.route.params.id,
     });
   };
 
@@ -100,7 +66,7 @@ class ExerciseDetailsScreen extends React.Component<Props, State> {
 
   _deleteExercise = () => {
     this.setState({ isDeleting: true }, () => {
-      deleteExercise(this.props.navigation.state.params.id);
+      deleteExercise(this.props.route.params.id);
       this.props.navigation.goBack();
     });
   };
@@ -175,9 +141,6 @@ class ExerciseDetailsScreen extends React.Component<Props, State> {
   }
 }
 const styles = StyleSheet.create({
-  toolbarActions: {
-    flexDirection: 'row',
-  },
   screen: {
     padding: 16,
   },

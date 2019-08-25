@@ -24,7 +24,7 @@ type Props = {
 class EditSetsScreen extends Component<Props> {
   render() {
     const { defaultUnitSystem } = this.props;
-    const { day, exerciseKey } = this.props.navigation.state.params;
+    const { day, exerciseKey } = this.props.route.params;
 
     const id = getExerciseSchemaId(day, exerciseKey);
 

@@ -12,11 +12,14 @@ import HomeNavigator from './scenes/HomeNavigator';
 import SettingsNavigator from './scenes/SettingsNavigator';
 import StatisticsNavigator from './scenes/StatisticsNavigator';
 import EditExerciseScreen from './scenes/EditExercise/EditExerciseScreen';
+import withTheme from './utils/theme/withTheme';
+import HeaderButton from './components/HeaderButton';
+import HeaderIconButton from './components/HeaderIconButton';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
-export default function App() {
+export default withTheme(function App({ theme }) {
   const ref = React.useRef();
 
   useBackButton(ref);
@@ -30,36 +33,62 @@ export default function App() {
               initialRouteName="Home"
               shifting={false}
               keyboardHidesNavigationBar={false}
+              screenOptions={{ theme: theme }}
             >
               <Tab.Screen
                 name="Home"
-                component={HomeNavigator}
                 options={{
                   tabBarIcon: tabBarIcon('home'),
                   title: i18n.t('menu__home'),
                 }}
-              />
+              >
+                {() => <HomeNavigator theme={theme} />}
+              </Tab.Screen>
               <Tab.Screen
                 name="Statistics"
-                component={StatisticsNavigator}
                 options={{
                   tabBarIcon: tabBarIcon('show-chart'),
                   title: i18n.t('menu__statistics'),
                 }}
-              />
+              >
+                {() => <StatisticsNavigator theme={theme} />}
+              </Tab.Screen>
               <Tab.Screen
                 name="Settings"
-                component={SettingsNavigator}
                 options={{
                   tabBarIcon: tabBarIcon('settings'),
                   title: i18n.t('menu__settings'),
                 }}
-              />
+              >
+                {() => <SettingsNavigator theme={theme} />}
+              </Tab.Screen>
             </Tab.Navigator>
           )}
         </Stack.Screen>
-        <Stack.Screen name="EditExercise" component={EditExerciseScreen} />
+        <Stack.Screen
+          name="EditExercise"
+          component={EditExerciseScreen}
+          options={({ route, navigation }) => {
+            const { params = {} } = route;
+            return {
+              title: params.id
+                ? i18n.t('edit_exercise')
+                : i18n.t('new_exercise'),
+              headerLeft: (
+                <HeaderIconButton
+                  icon="close"
+                  onPress={() => navigation.goBack()}
+                />
+              ),
+              headerRight: (
+                <HeaderButton onPress={params.onSave}>
+                  {i18n.t('save')}
+                </HeaderButton>
+              ),
+            };
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+});

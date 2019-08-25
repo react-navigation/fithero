@@ -22,15 +22,12 @@ import i18n from '../../utils/i18n';
 import { getExerciseName, searchExerciseByName } from '../../utils/exercises';
 import type { ThemeType } from '../../utils/theme/withTheme';
 import withTheme from '../../utils/theme/withTheme';
-import HeaderIconButton from '../../components/HeaderIconButton';
 import type {
   ExerciseSchemaType,
   WorkoutExerciseSchemaType,
 } from '../../database/types';
 import { getAllExercises } from '../../database/services/ExerciseService';
 import { deserializeExercises } from '../../database/utils';
-import { getDefaultNavigationOptions } from '../../utils/navigation';
-import type { AppThemeType } from '../../redux/modules/settings';
 import { getRecentExercises } from '../../database/services/WorkoutExerciseService';
 import { getToday, toDate } from '../../utils/date';
 
@@ -38,12 +35,6 @@ type NavigationObjectType = {
   navigation: NavigationType<{
     day: string,
   }>,
-};
-
-type NavigationOptions = NavigationObjectType & {
-  screenProps: {
-    theme: AppThemeType,
-  },
 };
 
 type Props = NavigationObjectType & {
@@ -60,23 +51,6 @@ type State = {
 export class ExercisesScreen extends Component<Props, State> {
   realmExercises: RealmResults<ExerciseSchemaType>;
   realmRecentExercises: RealmResults<WorkoutExerciseSchemaType>;
-
-  static navigationOptions = ({
-    navigation,
-    screenProps,
-  }: NavigationOptions) => ({
-    ...getDefaultNavigationOptions(screenProps.theme),
-    ...Platform.select({
-      android: { header: null },
-    }),
-    headerRight: (
-      <HeaderIconButton
-        onPress={() => navigation.navigate('EditExercise')}
-        icon="add"
-        last
-      />
-    ),
-  });
 
   constructor(props: Props) {
     super(props);
@@ -141,7 +115,7 @@ export class ExercisesScreen extends Component<Props, State> {
   }
 
   _onExercisePress = (exercise: ExerciseSchemaType) => {
-    const { day } = this.props.navigation.state.params;
+    const { day } = this.props.route.params;
 
     if (Platform.OS === 'android') {
       // It already works on iOS
@@ -229,7 +203,7 @@ export class ExercisesScreen extends Component<Props, State> {
   };
 
   _renderHeader = () => {
-    const { day } = this.props.navigation.state.params;
+    const { day } = this.props.route.params;
     return (
       <View>
         <ExerciseHeader day={day} style={styles.header} />

@@ -17,9 +17,6 @@ Enzyme.configure({ adapter: new Adapter() });
 // We never want to call the real methods of this module (or bad things are going to happen)
 jest.mock('realm');
 // This module has some issues with Jest and we want to avoid to use transformIgnorePatterns
-jest.mock('react-navigation-backhandler', () => ({
-  AndroidBackHandler: ({ children }) => children,
-}));
 jest.mock('react-native-localize', () => ({
   findBestAvailableLanguage: () => 'en',
 }));

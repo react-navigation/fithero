@@ -5,53 +5,21 @@ import { StyleSheet } from 'react-native';
 import { FAB } from 'react-native-paper';
 
 import WorkoutList from '../../components/WorkoutList';
-import {
-  getDatePrettyFormat,
-  getToday,
-  dateToWorkoutId,
-} from '../../utils/date';
+import { dateToWorkoutId } from '../../utils/date';
 import { getWorkoutById } from '../../database/services/WorkoutService';
 import type { NavigationType } from '../../types';
 import type { WorkoutSchemaType } from '../../database/types';
 import DataProvider from '../../components/DataProvider';
 import Screen from '../../components/Screen';
 import WorkoutComments from '../../components/WorkoutComments';
-import i18n from '../../utils/i18n';
-import HeaderOverflowButton from '../../components/HeaderOverflowButton';
-import type { ThemeType } from '../../utils/theme/withTheme';
-import { getDefaultNavigationOptions } from '../../utils/navigation';
 
 type NavigationObjectType = {
   navigation: NavigationType<{ day: string, addWorkoutComment: () => void }>,
 };
 
-type NavigationOptions = NavigationObjectType & {
-  screenProps: {
-    theme: ThemeType,
-  },
-};
-
 type Props = NavigationObjectType & {};
 
 class WorkoutScreen extends React.Component<Props> {
-  static navigationOptions = ({
-    navigation,
-    screenProps,
-  }: NavigationOptions) => {
-    const { params = {} } = navigation.state;
-    return {
-      ...getDefaultNavigationOptions(screenProps.theme),
-      title: getDatePrettyFormat(navigation.state.params.day, getToday(), true),
-      headerRight: (
-        <HeaderOverflowButton
-          actions={[i18n.t('comment_workout')]}
-          onPress={params.addWorkoutComment}
-          last
-        />
-      ),
-    };
-  };
-
   componentDidMount() {
     this.props.navigation.setParams({
       addWorkoutComment: this._addWorkoutComment,
@@ -59,17 +27,17 @@ class WorkoutScreen extends React.Component<Props> {
   }
 
   _addWorkoutComment = () => {
-    const day = this.props.navigation.state.params.day;
+    const day = this.props.route.params.day;
     this.props.navigation.navigate('Comments', { day });
   };
 
   _onAddExercises = () => {
-    const day = this.props.navigation.state.params.day;
+    const day = this.props.route.params.day;
     this.props.navigation.navigate('Exercises', { day });
   };
 
   _onExercisePress = (exerciseKey: string, customExerciseName?: string) => {
-    const day = this.props.navigation.state.params.day;
+    const day = this.props.route.params.day;
     this.props.navigation.navigate('EditSets', {
       day,
       exerciseKey,
@@ -85,7 +53,7 @@ class WorkoutScreen extends React.Component<Props> {
   }
 
   render() {
-    const day = dateToWorkoutId(this.props.navigation.state.params.day);
+    const day = dateToWorkoutId(this.props.route.params.day);
 
     return (
       <Screen>

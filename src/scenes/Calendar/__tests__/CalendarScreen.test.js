@@ -14,13 +14,13 @@ test('remove realm listeners on unmounting', () => {
     <CalendarScreen
       navigation={{
         addListener: jest.fn(),
-        state: { params: { today: '07/10/2018' } },
         setParams: jest.fn(),
         navigate: jest.fn(),
         push: jest.fn(),
         goBack: jest.fn(),
         dispatch: jest.fn(),
       }}
+      route={{ params: { today: '07/10/2018' } }}
       firstDay={0}
       theme={theme}
     />

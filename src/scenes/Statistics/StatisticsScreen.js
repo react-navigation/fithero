@@ -20,20 +20,12 @@ import { getSetsThisWeek } from '../../database/services/WorkoutSetService';
 import withTheme from '../../utils/theme/withTheme';
 import type { ThemeType } from '../../utils/theme/withTheme';
 import type {
-  AppThemeType,
   DefaultUnitSystemType,
   FirstDayOfTheWeekType,
 } from '../../redux/modules/settings';
 import { toLb } from '../../utils/metrics';
 import WorkoutTimesChart from './WorkoutTimesChart';
 import Screen from '../../components/Screen';
-import { getDefaultNavigationOptions } from '../../utils/navigation';
-
-type NavigationOptions = {
-  screenProps: {
-    theme: AppThemeType,
-  },
-};
 
 type Props = {
   defaultUnitSystem: DefaultUnitSystemType,
@@ -43,111 +35,94 @@ type Props = {
 
 const { width } = Dimensions.get('window');
 
-class StatisticsScreen extends React.Component<Props> {
-  static navigationOptions = ({ screenProps }: NavigationOptions) => {
-    return {
-      ...getDefaultNavigationOptions(screenProps.theme),
-    };
-  };
+function StatisticsScreen(props: Props) {
+  const { defaultUnitSystem, theme } = props;
 
-  render() {
-    const { defaultUnitSystem, theme } = this.props;
-
-    return (
-      <Screen style={styles.screen}>
-        <ScrollView
-          horizontal
-          style={styles.carousel}
-          showsHorizontalScrollIndicator={false}
-          overScrollMode="never"
-        >
-          <Card style={[styles.singleCard, styles.first]}>
-            <Text numberOfLines={1} style={styles.singleTitle}>
-              {i18n.t('total_workouts')}
-            </Text>
-            <DataProvider
-              query={getAllWorkoutsWithExercises}
-              parse={(data: Array<WorkoutSchemaType>) =>
-                data ? data.length : 0
-              }
-              render={(data: number) => (
-                <Text style={styles.singleNumber}>{data}</Text>
-              )}
-            />
-          </Card>
-          <Card style={styles.singleCard}>
-            <Text numberOfLines={1} style={styles.singleTitle}>
-              {i18n.t('this_month')}
-            </Text>
-            <DataProvider
-              query={getWorkoutsThisMonth}
-              parse={(data: Array<WorkoutSchemaType>) =>
-                data ? data.length : 0
-              }
-              render={(data: number) => (
-                <Text style={styles.singleNumber}>{data}</Text>
-              )}
-            />
-          </Card>
-          <Card style={styles.singleCard}>
-            <Text numberOfLines={1} style={styles.singleTitle}>
-              {i18n.t('this_week')}
-            </Text>
-            <DataProvider
-              query={getWorkoutsThisWeek}
-              parse={(data: Array<WorkoutSchemaType>) =>
-                data ? data.length : 0
-              }
-              render={(data: number) => (
-                <Text style={styles.singleNumber}>{data}</Text>
-              )}
-            />
-          </Card>
-          <Card style={[styles.singleCard, styles.last]}>
-            <Text numberOfLines={1} style={styles.singleTitle}>
-              {i18n.t('week_volume')}
-            </Text>
-            <DataProvider
-              query={getSetsThisWeek}
-              parse={(data: Array<WorkoutSetSchemaType>) =>
-                data.reduce(
-                  (previousValue, s) => previousValue + s.reps * s.weight,
-                  0
-                )
-              }
-              render={(data: number) => {
-                const unit =
-                  defaultUnitSystem === 'metric'
-                    ? i18n.t('kg.unit', { count: Math.floor(data) })
-                    : i18n.t('lb');
-                return (
-                  <Text style={styles.singleNumber}>
-                    {Math.floor(
-                      defaultUnitSystem === 'metric' ? data : toLb(data)
-                    )}{' '}
-                    <Text
-                      style={[
-                        styles.unit,
-                        { color: theme.colors.secondaryText },
-                      ]}
-                    >
-                      {unit}
-                    </Text>
-                  </Text>
-                );
-              }}
-            />
-          </Card>
-        </ScrollView>
-        <Card style={styles.chartCard}>
-          <Text style={[styles.singleTitle, styles.chartTitle]}>
-            {i18n.t('workouts_per_week')}
+  return (
+    <Screen style={styles.screen}>
+      <ScrollView
+        horizontal
+        style={styles.carousel}
+        showsHorizontalScrollIndicator={false}
+        overScrollMode="never"
+      >
+        <Card style={[styles.singleCard, styles.first]}>
+          <Text numberOfLines={1} style={styles.singleTitle}>
+            {i18n.t('total_workouts')}
           </Text>
-          <WorkoutTimesChart theme={theme} />
+          <DataProvider
+            query={getAllWorkoutsWithExercises}
+            parse={(data: Array<WorkoutSchemaType>) => (data ? data.length : 0)}
+            render={(data: number) => (
+              <Text style={styles.singleNumber}>{data}</Text>
+            )}
+          />
         </Card>
-      </Screen>
-    );
-  }
+        <Card style={styles.singleCard}>
+          <Text numberOfLines={1} style={styles.singleTitle}>
+            {i18n.t('this_month')}
+          </Text>
+          <DataProvider
+            query={getWorkoutsThisMonth}
+            parse={(data: Array<WorkoutSchemaType>) => (data ? data.length : 0)}
+            render={(data: number) => (
+              <Text style={styles.singleNumber}>{data}</Text>
+            )}
+          />
+        </Card>
+        <Card style={styles.singleCard}>
+          <Text numberOfLines={1} style={styles.singleTitle}>
+            {i18n.t('this_week')}
+          </Text>
+          <DataProvider
+            query={getWorkoutsThisWeek}
+            parse={(data: Array<WorkoutSchemaType>) => (data ? data.length : 0)}
+            render={(data: number) => (
+              <Text style={styles.singleNumber}>{data}</Text>
+            )}
+          />
+        </Card>
+        <Card style={[styles.singleCard, styles.last]}>
+          <Text numberOfLines={1} style={styles.singleTitle}>
+            {i18n.t('week_volume')}
+          </Text>
+          <DataProvider
+            query={getSetsThisWeek}
+            parse={(data: Array<WorkoutSetSchemaType>) =>
+              data.reduce(
+                (previousValue, s) => previousValue + s.reps * s.weight,
+                0
+              )
+            }
+            render={(data: number) => {
+              const unit =
+                defaultUnitSystem === 'metric'
+                  ? i18n.t('kg.unit', { count: Math.floor(data) })
+                  : i18n.t('lb');
+              return (
+                <Text style={styles.singleNumber}>
+                  {Math.floor(
+                    defaultUnitSystem === 'metric' ? data : toLb(data)
+                  )}{' '}
+                  <Text
+                    style={[styles.unit, { color: theme.colors.secondaryText }]}
+                  >
+                    {unit}
+                  </Text>
+                </Text>
+              );
+            }}
+          />
+        </Card>
+      </ScrollView>
+      <Card style={styles.chartCard}>
+        <Text style={[styles.singleTitle, styles.chartTitle]}>
+          {i18n.t('workouts_per_week')}
+        </Text>
+        <WorkoutTimesChart theme={theme} />
+      </Card>
+    </Screen>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -31,7 +31,6 @@ describe('ExercisesScreen', () => {
     <ExercisesScreen
       navigation={{
         addListener: jest.fn(),
-        state: { params: { day: '21/10/2018' } },
         goBack: jest.fn(),
         setParams: jest.fn(),
         navigate: jest.fn(),
@@ -39,6 +38,7 @@ describe('ExercisesScreen', () => {
         dispatch: jest.fn(),
       }}
       theme={theme}
+      route={{ params: { day: '21/10/2018' } }}
     />
   );
   const List = wrapper.find('SectionList');

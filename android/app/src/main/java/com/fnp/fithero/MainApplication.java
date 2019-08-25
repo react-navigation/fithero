@@ -3,6 +3,7 @@ package com.fnp.fithero;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.swmansion.reanimated.ReanimatedPackage;
 import com.facebook.react.bridge.ReadableNativeArray;
 import com.facebook.react.bridge.ReadableNativeMap;
 import com.github.wuxudong.rncharts.MPAndroidChartPackage;
@@ -53,6 +54,7 @@ public class MainApplication extends Application implements ReactApplication, Sh
     protected List<ReactPackage> getPackages() {
       return Arrays.asList(
           new MainReactPackage(),
+            new ReanimatedPackage(),
           new MPAndroidChartPackage(),
           new TabbedViewPagerAndroidPackage(),
           new AsyncStoragePackage(),

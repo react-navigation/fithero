@@ -24,6 +24,8 @@ target 'FitHero' do
 
   use_unimodules!
 
+  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+
 end
 
 

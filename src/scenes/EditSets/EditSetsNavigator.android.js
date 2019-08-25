@@ -7,12 +7,10 @@ import TabbedViewPager from 'react-native-tabbed-view-pager-android';
 import withTheme from '../../utils/theme/withTheme';
 import i18n from '../../utils/i18n';
 import { dateToString, getDatePrettyFormat, getToday } from '../../utils/date';
-import { getExerciseName } from '../../utils/exercises';
 import ExerciseHistory from './ExerciseHistory';
 import EditSetsScreen from './EditSetsScreen';
 import AndroidBackHandler from './AndroidBackHandler';
 import Screen from '../../components/Screen';
-import { getDefaultNavigationOptions } from '../../utils/navigation';
 import type { NavigationType } from '../../types';
 import type { ThemeType } from '../../utils/theme/withTheme';
 
@@ -27,12 +25,6 @@ type NavigationObjectType = {
   }>,
 };
 
-type NavigationOptions = NavigationObjectType & {
-  screenProps: {
-    theme: ThemeType,
-  },
-};
-
 type Props = NavigationObjectType & {
   theme: ThemeType,
 };
@@ -45,25 +37,11 @@ class EditSetsNavigator extends React.Component<Props, State> {
   viewPager: typeof TabbedViewPager;
   selectedPage = 0;
 
-  static navigationOptions = ({
-    navigation,
-    screenProps,
-  }: NavigationOptions) => ({
-    ...getDefaultNavigationOptions(screenProps.theme),
-    headerTitle: getExerciseName(
-      navigation.state.params.exerciseKey,
-      navigation.state.params.exerciseName
-    ),
-  });
-
   constructor(props: Props) {
     super(props);
     this.state = {
       tabNames: [
-        getDatePrettyFormat(
-          props.navigation.state.params.day,
-          dateToString(getToday())
-        ),
+        getDatePrettyFormat(props.route.params.day, dateToString(getToday())),
         i18n.t('history'),
       ],
     };
@@ -83,7 +61,7 @@ class EditSetsNavigator extends React.Component<Props, State> {
   };
 
   render() {
-    const { navigation, theme } = this.props;
+    const { navigation, theme, route } = this.props;
 
     return (
       <Screen>
@@ -110,7 +88,7 @@ class EditSetsNavigator extends React.Component<Props, State> {
               const ContentComponent = getContentComponent(i);
               return (
                 <View key={i} style={styles.content}>
-                  <ContentComponent navigation={navigation} />
+                  <ContentComponent navigation={navigation} route={route} />
                 </View>
               );
             })}
