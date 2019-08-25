@@ -17,9 +17,6 @@ import {
   setMomentFirstDayOfTheWeek,
 } from './utils/date';
 import PaperThemeProvider from './PaperThemeProvider';
-import { hideSplashScreen } from './native/RNSplashScreen';
-
-hideSplashScreen();
 
 if (global.__DEV__) {
   YellowBox.ignoreWarnings([
@@ -49,7 +46,6 @@ export default class App extends React.Component<{}, State> {
   };
 
   componentDidMount() {
-    hideSplashScreen();
     this._loadSettings();
   }
 
