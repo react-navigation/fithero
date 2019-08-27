@@ -15,14 +15,15 @@ import {
 import type { ExerciseSchemaType } from '../../database/types';
 import { getExerciseMuscleName, getExerciseName } from '../../utils/exercises';
 import i18n from '../../utils/i18n';
-import type { NavigationType } from '../../types';
+import type { NavigationType, RouteType } from '../../types';
 import DeleteWarningDialog from '../../components/DeleteWarningDialog';
 import Screen from '../../components/Screen';
 
 const getExercise = memoize(id => exercises.find(e => e.id === id));
 
 type NavigationObjectType = {
-  navigation: NavigationType<{
+  navigation: NavigationType,
+  route: RouteType<{
     id: string,
     editAction: () => void,
     deleteAction: (i: number) => void,

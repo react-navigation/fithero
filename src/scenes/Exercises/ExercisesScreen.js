@@ -15,7 +15,7 @@ import sortBy from 'lodash/sortBy';
 import Screen from '../../components/Screen';
 import ExerciseItem from './ExerciseItem';
 import ExerciseHeader from './ExerciseHeader';
-import type { NavigationType, RealmResults } from '../../types';
+import type { NavigationType, RealmResults, RouteType } from '../../types';
 import ChipsCategory from '../../components/ChipsCategory';
 import { mapCategories, mainCategories } from '../../utils/muscles';
 import i18n from '../../utils/i18n';
@@ -32,7 +32,8 @@ import { getRecentExercises } from '../../database/services/WorkoutExerciseServi
 import { getToday, toDate } from '../../utils/date';
 
 type NavigationObjectType = {
-  navigation: NavigationType<{
+  navigation: NavigationType,
+  route: RouteType<{
     day: string,
   }>,
 };

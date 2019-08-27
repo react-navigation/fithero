@@ -1,7 +1,7 @@
 /* @flow */
 
 import { Platform } from 'react-native';
-import { TransitionPresets } from '@react-navigation/stack'
+import { TransitionPresets } from '@react-navigation/stack';
 import type { ThemeType } from './theme/withTheme';
 
 export const getDefaultNavigationOptions = (theme: ThemeType) => ({

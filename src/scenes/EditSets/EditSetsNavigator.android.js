@@ -11,14 +11,15 @@ import ExerciseHistory from './ExerciseHistory';
 import EditSetsScreen from './EditSetsScreen';
 import AndroidBackHandler from './AndroidBackHandler';
 import Screen from '../../components/Screen';
-import type { NavigationType } from '../../types';
+import type { NavigationType, RouteType } from '../../types';
 import type { ThemeType } from '../../utils/theme/withTheme';
 
 const getContentComponent = index =>
   index === 0 ? EditSetsScreen : ExerciseHistory;
 
 type NavigationObjectType = {
-  navigation: NavigationType<{
+  navigation: NavigationType,
+  route: RouteType<{
     day: string,
     exerciseKey: string,
     exerciseName?: string,

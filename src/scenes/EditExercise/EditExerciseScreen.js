@@ -13,11 +13,12 @@ import {
   editExercise,
   getExerciseById,
 } from '../../database/services/ExerciseService';
-import type { NavigationType } from '../../types';
+import type { NavigationType, RouteType } from '../../types';
 import Screen from '../../components/Screen';
 
 type NavigationObjectType = {
-  navigation: NavigationType<{ id?: string, onSave: () => void }>,
+  navigation: NavigationType,
+  route: RouteType<{ id?: string, onSave: () => void }>,
 };
 
 type Props = NavigationObjectType & {

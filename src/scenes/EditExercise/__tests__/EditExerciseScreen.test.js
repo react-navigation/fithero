@@ -14,6 +14,7 @@ it('handles validation errors', () => {
   const renderer = TestRenderer.create(
     <EditExerciseScreen
       exercise={null}
+      route={{ params: { onSave: () => {} } }}
       navigation={{
         setParams: jest.fn(),
         addListener: jest.fn(),

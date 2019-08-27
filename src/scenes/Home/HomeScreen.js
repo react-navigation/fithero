@@ -12,7 +12,7 @@ import { FAB } from 'react-native-paper';
 import { connect } from 'react-redux';
 
 import Screen from '../../components/Screen';
-import type { NavigationType } from '../../types';
+import type { NavigationType, RouteType } from '../../types';
 import DayRow from './DayRow';
 import {
   dateToWorkoutId,
@@ -32,7 +32,8 @@ import WorkoutComments from '../../components/WorkoutComments';
 import { hideSplashScreen } from '../../native/RNSplashScreen';
 
 type NavigationObjectType = {
-  navigation: NavigationType<{
+  navigation: NavigationType,
+  route: RouteType<{
     addWorkoutComment: () => void,
   }>,
 };

@@ -11,12 +11,13 @@ import ExerciseHistory from './ExerciseHistory';
 import i18n from '../../utils/i18n';
 import { dateToString, getDatePrettyFormat, getToday } from '../../utils/date';
 import withTheme from '../../utils/theme/withTheme';
-import type { NavigationType } from '../../types';
+import type { NavigationType, RouteType } from '../../types';
 import type { ThemeType } from '../../utils/theme/withTheme';
 import Screen from '../../components/Screen';
 
 type NavigationObjectType = {
-  navigation: NavigationType<{
+  navigation: NavigationType,
+  route: RouteType<{
     day: string,
     exerciseKey: string,
     exerciseName?: string,

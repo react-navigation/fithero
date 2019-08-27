@@ -7,14 +7,15 @@ import { FAB } from 'react-native-paper';
 import WorkoutList from '../../components/WorkoutList';
 import { dateToWorkoutId } from '../../utils/date';
 import { getWorkoutById } from '../../database/services/WorkoutService';
-import type { NavigationType } from '../../types';
+import type { NavigationType, RouteType } from '../../types';
 import type { WorkoutSchemaType } from '../../database/types';
 import DataProvider from '../../components/DataProvider';
 import Screen from '../../components/Screen';
 import WorkoutComments from '../../components/WorkoutComments';
 
 type NavigationObjectType = {
-  navigation: NavigationType<{ day: string, addWorkoutComment: () => void }>,
+  navigation: NavigationType,
+  route: RouteType<{ day: string, addWorkoutComment: () => void }>,
 };
 
 type Props = NavigationObjectType & {};

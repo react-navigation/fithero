@@ -5,7 +5,7 @@ import { Platform, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
 import Screen from '../../components/Screen';
-import type { NavigationType } from '../../types';
+import type { NavigationType, RouteType } from '../../types';
 import type { WorkoutExerciseSchemaType } from '../../database/types';
 import { getExerciseSchemaId } from '../../database/utils';
 import EditSetsWithControls from './EditSetsWithControls';
@@ -14,7 +14,8 @@ import { getWorkoutExerciseById } from '../../database/services/WorkoutExerciseS
 import DataProvider from '../../components/DataProvider';
 
 type Props = {
-  navigation: NavigationType<{
+  navigation: NavigationType,
+  route: RouteType<{
     day: string,
     exerciseKey: string,
   }>,

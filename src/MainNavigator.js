@@ -14,13 +14,14 @@ import StatisticsNavigator from './scenes/StatisticsNavigator';
 import EditExerciseScreen from './scenes/EditExercise/EditExerciseScreen';
 import HeaderButton from './components/HeaderButton';
 import HeaderIconButton from './components/HeaderIconButton';
-import {getDefaultNavigationOptions} from "./utils/navigation";
-import withTheme from "./utils/theme/withTheme";
+import { getDefaultNavigationOptions } from './utils/navigation';
+import withTheme from './utils/theme/withTheme';
+import type { AppThemeType } from './redux/modules/settings';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
-export default withTheme(function App({ theme }) {
+export default withTheme(function App({ theme }: { theme: AppThemeType }) {
   const ref = React.useRef();
 
   useBackButton(ref);
@@ -89,4 +90,4 @@ export default withTheme(function App({ theme }) {
       </Stack.Navigator>
     </NavigationContainer>
   );
-})
+});

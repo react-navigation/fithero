@@ -14,10 +14,7 @@ export type NavigateType = (
 ) => void;
 
 // TODO replace this type for flow-typed react-navigation 2
-export type NavigationType<T> = {
-  state: {
-    params: T,
-  },
+export type NavigationType = {
   addListener: (
     type: 'willBlur',
     () => void
@@ -30,6 +27,10 @@ export type NavigationType<T> = {
   setParams: (params: { [key: string]: any }) => void,
   goBack: (routeKey?: ?string) => boolean,
   dispatch: (() => void) => void,
+};
+
+export type RouteType<T> = {
+  params: T,
 };
 
 export type DispatchType<T> = {

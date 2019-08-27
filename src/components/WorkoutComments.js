@@ -16,7 +16,7 @@ type Props = {
 };
 
 function WorkoutComments({ theme, comments, day }: Props) {
-  const navigation: NavigationType<{ day: string }> = useNavigation();
+  const navigation: NavigationType = useNavigation();
   const { colors } = theme;
 
   return (

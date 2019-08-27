@@ -14,14 +14,15 @@ import { connect } from 'react-redux';
 import ExerciseHistoryItem from './ExerciseHistoryItem';
 import { getMaxSetByType } from '../../database/services/WorkoutSetService';
 import type { DefaultUnitSystemType } from '../../redux/modules/settings';
-import type { NavigationType } from '../../types';
+import type { NavigationType, RouteType } from '../../types';
 import { dateToString, getToday } from '../../utils/date';
 import i18n from '../../utils/i18n';
 
 type Props = {
   type: 'string',
   unit: DefaultUnitSystemType,
-  navigation: NavigationType<{
+  navigation: NavigationType,
+  route: RouteType<{
     exerciseKey: string,
   }>,
 };

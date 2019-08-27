@@ -20,10 +20,15 @@ import { isCustomExercise } from '../database/services/ExerciseService';
 import HeaderButton from '../components/HeaderButton';
 import { getExerciseName } from '../utils/exercises';
 import withTheme from '../utils/theme/withTheme';
+import type { AppThemeType } from '../redux/modules/settings';
 
 const Stack = createStackNavigator();
 
-export default withTheme(function StackScreen({ theme }) {
+export default withTheme(function StackScreen({
+  theme,
+}: {
+  theme: AppThemeType,
+}) {
   return (
     <Stack.Navigator screenOptions={getDefaultNavigationOptions(theme)}>
       <Stack.Screen

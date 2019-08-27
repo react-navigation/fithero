@@ -6,7 +6,7 @@ import { CalendarList } from 'react-native-calendars';
 import { connect } from 'react-redux';
 
 import Screen from '../../components/Screen';
-import type { NavigationType, RealmResults } from '../../types';
+import type { NavigationType, RealmResults, RouteType } from '../../types';
 import { firstDayOfTheWeekToNumber, formatDate } from '../../utils/date';
 import { getAllWorkouts } from '../../database/services/WorkoutService';
 import type { WorkoutSchemaType } from '../../database/types';
@@ -14,7 +14,8 @@ import withTheme from '../../utils/theme/withTheme';
 import type { ThemeType } from '../../utils/theme/withTheme';
 
 type NavigationObjectType = {
-  navigation: NavigationType<{
+  navigation: NavigationType,
+  route: RouteType<{
     today: string,
     scrollToToday?: () => void,
   }>,
