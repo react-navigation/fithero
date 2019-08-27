@@ -34,7 +34,7 @@ type State = {
 export class EditExerciseScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    const { params = {} } = props.navigation.state;
+    const { params = {} } = props.route;
     const { id } = params;
 
     const exercise = id ? getExerciseById(id)[0] : null;
@@ -62,7 +62,7 @@ export class EditExerciseScreen extends React.Component<Props, State> {
         secondary: [],
       };
 
-      const { params = {} } = this.props.navigation.state;
+      const { params = {} } = this.props.route;
       if (params.id) {
         editExercise({ id: params.id, ...exerciseForDb });
       } else {

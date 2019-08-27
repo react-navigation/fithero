@@ -120,7 +120,7 @@ class ExerciseDetailsScreen extends React.Component<Props, State> {
       return null;
     }
 
-    const { params = {} } = this.props.navigation.state;
+    const { params = {} } = this.props.route;
     const id = params.id;
     if (isCustomExercise(id)) {
       return (

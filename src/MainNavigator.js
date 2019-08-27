@@ -14,11 +14,13 @@ import StatisticsNavigator from './scenes/StatisticsNavigator';
 import EditExerciseScreen from './scenes/EditExercise/EditExerciseScreen';
 import HeaderButton from './components/HeaderButton';
 import HeaderIconButton from './components/HeaderIconButton';
+import {getDefaultNavigationOptions} from "./utils/navigation";
+import withTheme from "./utils/theme/withTheme";
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
-export default function App() {
+export default withTheme(function App({ theme }) {
   const ref = React.useRef();
 
   useBackButton(ref);
@@ -66,16 +68,17 @@ export default function App() {
           options={({ route, navigation }) => {
             const { params = {} } = route;
             return {
+              ...getDefaultNavigationOptions(theme),
               title: params.id
                 ? i18n.t('edit_exercise')
                 : i18n.t('new_exercise'),
-              headerLeft: (
+              headerLeft: () => (
                 <HeaderIconButton
                   icon="close"
                   onPress={() => navigation.goBack()}
                 />
               ),
-              headerRight: (
+              headerRight: () => (
                 <HeaderButton onPress={params.onSave}>
                   {i18n.t('save')}
                 </HeaderButton>
@@ -86,4 +89,4 @@ export default function App() {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+})
