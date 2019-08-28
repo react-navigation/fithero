@@ -18,7 +18,7 @@
     "@react-navigation/core": "^5.0.0-alpha.3",
     "@react-navigation/material-bottom-tabs": "^5.0.0-alpha.4",
     "@react-navigation/native": "^5.0.0-alpha.3",
-    "@react-navigation/stack": "^5.0.0-alpha.5",
+    "@react-navigation/stack": "^5.0.0-alpha.7",
     "bugsnag-react-native": "^2.10.2",
     "dziku-exercises": "^0.2.0",
     "expo-document-picker": "^4.0.0",
