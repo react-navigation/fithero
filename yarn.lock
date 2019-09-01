@@ -1124,10 +1124,10 @@
   dependencies:
     shortid "^2.2.14"
 
-"@react-navigation/stack@^5.0.0-alpha.12":
-  version "5.0.0-alpha.12"
-  resolved "https://registry.yarnpkg.com/@react-navigation/stack/-/stack-5.0.0-alpha.12.tgz#5875a8068e0a740d7d279886c0235c094a2d9a4f"
-  integrity sha512-bPlPqUWtujlH2xeb2jjWhhoRAvJO12j4teAvdbXbVdCC1goESHL4kX9C9Je0d1moafl/kzRoVM9GE4h3KTWALQ==
+"@react-navigation/stack@^5.0.0-alpha.13":
+  version "5.0.0-alpha.13"
+  resolved "https://registry.yarnpkg.com/@react-navigation/stack/-/stack-5.0.0-alpha.13.tgz#ec2913bb1412fc53f4c1c62d7445552c31f2ee31"
+  integrity sha512-HHAxhSQyLCFrY5eSDg1JqCR5RnNbaBObjNMJUElfy1WMAC1HXNDdqBSLZ2M4lL9k+shbrB+NLf+yrclnyC7axg==
   dependencies:
     "@react-navigation/routers" "^5.0.0-alpha.7"
     react-native-safe-area-view "^0.14.6"

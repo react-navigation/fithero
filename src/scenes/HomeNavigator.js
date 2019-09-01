@@ -64,7 +64,7 @@ export default withTheme(function StackScreen({
         options={({ route }) => {
           const { params = {} } = route;
           return {
-            title: i18n.t('calendar'),
+            title: i18n.t('calendar') + "XXX",
             headerRight: () => (
               <HeaderIconButton
                 onPress={() => {
